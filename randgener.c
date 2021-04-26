@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#define MAXNUM 10
-#define MAXLEN 11
+#include "sort.h"
 
 int main()
 {
@@ -20,7 +17,7 @@ int main()
 	fp = fopen("dataset2.txt", "w+");
 	for(int i=0; i<MAXNUM; i++)
 	{
-		for(j=0; j<MAXLEN; j++)
+		for(j=0; j<MAXLEN-2; j++)
 		{
 			r = rand()%2;
 			if(r) line[j] = (rand()%26 + 65);
