@@ -33,7 +33,7 @@ void qksort(int *A, int head, int tail)
         }
 }
 
-int partition2(char A[][MAXLEN], int head, int tail)
+int partition2(char **A, int head, int tail)
 {
         int j=head+1;
         char tmp[MAXLEN];
@@ -56,7 +56,7 @@ int partition2(char A[][MAXLEN], int head, int tail)
         return j-1;
 }
 
-void qksort2(char A[][MAXLEN], int head, int tail)
+void qksort2(char **A, int head, int tail)
 {
         int pivot;
         if(tail - head > 0)
@@ -68,18 +68,17 @@ void qksort2(char A[][MAXLEN], int head, int tail)
 }
 
 //mergesort
-void merge(int A[], int A2[], int head, int tail)
+void merge(int *A, int *A2, int head, int tail, int pivot)
 {
-        int pivot = (head+tail)/2;
         int i = head, j = pivot+1;
         for(int k = head; k < tail+1; k++)
         {
-                if((A[i] <= A[j] && i < pivot+1) || j == tail+1)
+                if(j == tail+1 || (A[i] <= A[j] && i < pivot+1))
                 {
                         A2[k] = A[i];
                         i++;
                 }
-                else if((A[i] > A[j] && j < tail+1) || i == pivot+1)
+                else if(i == pivot+1 || (A[i] > A[j] && j < tail+1))
                 {
                         A2[k] = A[j];
                         j++;
@@ -99,36 +98,34 @@ void mgsort(int *A, int *A2, int head, int tail)
                 pivot = (head + tail) / 2;
                 mgsort(A, A2, head, pivot);
                 mgsort(A, A2, pivot+1, tail);
-                merge(A, A2, head, tail);
+                merge(A, A2, head, tail, pivot);
         }
 }
 
-void merge2(char A[][MAXLEN], char A2[][MAXLEN], int head, int tail)
+void merge2(char **A, char **A2, int head, int tail, int pivot)
 {
-        int pivot = (head+tail)/2;
         int i = head, j = pivot+1;
 	int cmp;
         for(int k = head; k < tail+1; k++)
         {
-		cmp = strcmp(A[i], A[j]);
-                if((cmp <= 0 && i < pivot+1) || j == tail+1)
+                if(j == tail+1 || (strcmp(A[i], A[j]) <= 0 && i < pivot+1))
                 {
-                        strcpy(A2[k], A[i]);
+			strcpy(A2[k], A[i]);
                         i++;
                 }
-                else if((cmp > 0 && j < tail+1) || i == pivot+1)
+                else if(i == pivot+1 || (strcmp(A[i], A[j]) > 0 && j < tail+1))
                 {
-                        strcpy(A2[k], A[j]);
+			strcpy(A2[k], A[j]);
                         j++;
                 }
         }
         for(int k = head; k < tail+1; k++)
         {
-                strcpy(A[k], A2[k]);
+		strcpy(A[k], A2[k]);
         }
 }
 
-void mgsort2(char A[][MAXLEN], char A2[][MAXLEN], int head, int tail)
+void mgsort2(char **A, char **A2, int head, int tail)
 {
         int pivot;
         if(head < tail)
@@ -136,12 +133,12 @@ void mgsort2(char A[][MAXLEN], char A2[][MAXLEN], int head, int tail)
                 pivot = (head + tail) / 2;
                 mgsort2(A, A2, head, pivot);
                 mgsort2(A, A2, pivot+1, tail);
-                merge2(A, A2, head, tail);
+                merge2(A, A2, head, tail, pivot);
         }
 }
 
 //radixsort
-int *rdsort(int *A, int *B)
+void rdsort(int *A, int *B)
 {
 	int *t;
 	int *p = A;
@@ -153,10 +150,10 @@ int *rdsort(int *A, int *B)
 		p = q; 
 		q = t;
 	}
-	return p;
+	if(p != A) for(int i=0; i<MAXNUM; i++) A[i] = B[i];
 }
 
-void rdsort2(char A[][MAXLEN], char B[][MAXLEN])
+void rdsort2(char **A, char **B)
 {
 	for(int i=MAXLEN-3; i>=0; i--)
 	{
@@ -192,7 +189,7 @@ void ctsort(int *A, int *B, int digit)
 	}
 }
 
-void ctsort2(char A[][MAXLEN], char B[][MAXLEN], int alpha)
+void ctsort2(char **A, char **B, int alpha)
 {
 	char a;
 	int C[MAXALPHA];
