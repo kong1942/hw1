@@ -10,12 +10,15 @@ int main(int argc, char **argv)
 	FILE *fp;
 	FILE *fp2;
 	char testline[MAXLEN];
+	memset(testline, '\0', sizeof(char)*MAXLEN);
 	char **wdArr;
 	wdArr = (char **)malloc(sizeof(char *) * MAXNUM);
 	for(int i=0; i<MAXNUM; i++)
 	{
 		wdArr[i] = (char *)malloc(sizeof(char) * MAXLEN);
+		memset(wdArr[i], '\0', sizeof(char)*MAXLEN);
 	}
+	
 	int *numArr;
 	numArr = (int *)malloc(sizeof(int) * MAXNUM);
 	int num=0, wd=0, i=1;
@@ -131,7 +134,6 @@ int main(int argc, char **argv)
 //		for(int i=0; i<MAXNUM; i++) printf("%s", wdArr[i]);
 	}
 	fprintf(fp2, "-----------------------------------\n");
-
 	for(int i=0; i<MAXNUM; i++)
 	{
 		free(wdArr[i]);

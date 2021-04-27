@@ -5,7 +5,7 @@ int main()
 	int r, j=0;
 	char line[MAXLEN];
 	FILE *fp;
-	fp = fopen("dataset1.txt", "w+");
+	fp = fopen("dataset1.txt", "w");
 
 	srand(0);
 	for(int i=0; i<MAXNUM; i++)
@@ -14,7 +14,7 @@ int main()
 	}
 	fclose(fp);
 
-	fp = fopen("dataset2.txt", "w+");
+	fp = fopen("dataset2.txt", "w");
 	for(int i=0; i<MAXNUM; i++)
 	{
 		for(j=0; j<MAXLEN-2; j++)

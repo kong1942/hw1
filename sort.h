@@ -6,7 +6,7 @@
 #define MAXLEN 102
 #define MAXINTNUM 10
 #define MAXDIGIT 10
-#define MAXALPHA 52
+#define MAXALPHA 53
 
 //quick sort
 int partition(int *A, int head, int tail);

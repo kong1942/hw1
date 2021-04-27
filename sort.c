@@ -154,7 +154,6 @@ void ctsort(int *A, int *B, int digit)
 	int C[MAXDIGIT];
 	int d[MAXNUM], n;
 	memset(C, 0, MAXDIGIT*sizeof(int));
-	memset(d, 0, MAXNUM*sizeof(int));
 	
 	for(int i=0; i<MAXNUM; i++)
 	{
@@ -194,13 +193,14 @@ void rdsort2(char **A, char **B)
 void ctsort2(char **A, char **B, int alpha)
 {
 	int C[MAXALPHA];
-	memset(C, 0, MAXALPHA*sizeof(int));
 	int n[MAXNUM];
+	memset(C, 0, MAXALPHA*sizeof(int));
 	
 	for(int i=0; i<MAXNUM; i++)
 	{
-		if(A[i][alpha] >= 'a' && A[i][alpha] <= 'z') n[i] = (A[i][alpha] - 'a') + 26;
-		else if(A[i][alpha] >= 'A' && A[i][alpha] <= 'Z') n[i] = A[i][alpha] - 'A';
+		if(A[i][alpha] >= 'a' && A[i][alpha] <= 'z') n[i] = (A[i][alpha] - 'a') + 27;
+		else if(A[i][alpha] >= 'A' && A[i][alpha] <= 'Z') n[i] = A[i][alpha] - 'A' + 1;
+		else if(A[i][alpha] == '\0') n[i] = 0;
 		C[n[i]]++;
 	}
 	C[0]--;
