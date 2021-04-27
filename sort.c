@@ -39,20 +39,20 @@ int partition2(char **A, int head, int tail)
         char tmp[MAXLEN];
         int pivot = head;
         char key[MAXLEN];
-	strcpy(key, A[pivot]);
+	memcpy(key, A[pivot], sizeof(char)*MAXLEN);
 
         for(int i=head+1; i<tail; i++)
         {
                 if(strcmp(A[i], key) < 0)
                 {
-                        strcpy(tmp, A[i]);
-                        strcpy(A[i], A[j]);
-                        strcpy(A[j], tmp);
+                        memcpy(tmp, A[i], sizeof(char)*MAXLEN);
+                        memcpy(A[i], A[j], sizeof(char)*MAXLEN);
+                        memcpy(A[j], tmp, sizeof(char)*MAXLEN);
                         j++;
                 }
         }
-        strcpy(A[head], A[j-1]);
-        strcpy(A[j-1], key);
+        memcpy(A[head], A[j-1], sizeof(char)*MAXLEN);
+        memcpy(A[j-1], key, sizeof(char)*MAXLEN);
         return j-1;
 }
 
@@ -84,10 +84,7 @@ void merge(int *A, int *A2, int head, int tail, int pivot)
                         j++;
                 }
         }
-        for(int k = head; k < tail+1; k++)
-        {
-                A[k] = A2[k];
-        }
+	memcpy(&A[head], &A2[head], sizeof(int)*(tail-head+1));
 }
 
 void mgsort(int *A, int *A2, int head, int tail)
@@ -105,23 +102,22 @@ void mgsort(int *A, int *A2, int head, int tail)
 void merge2(char **A, char **A2, int head, int tail, int pivot)
 {
         int i = head, j = pivot+1;
-	int cmp;
         for(int k = head; k < tail+1; k++)
         {
                 if(j == tail+1 || (strcmp(A[i], A[j]) <= 0 && i < pivot+1))
                 {
-			strcpy(A2[k], A[i]);
+			memcpy(A2[k], A[i], sizeof(char)*MAXLEN);
                         i++;
                 }
                 else if(i == pivot+1 || (strcmp(A[i], A[j]) > 0 && j < tail+1))
                 {
-			strcpy(A2[k], A[j]);
+			memcpy(A2[k], A[j], sizeof(char)*MAXLEN);
                         j++;
                 }
         }
-        for(int k = head; k < tail+1; k++)
+	for(int k = head; k < tail+1; k++)
         {
-		strcpy(A[k], A2[k]);
+		memcpy(A[k], A2[k], sizeof(char)*MAXLEN);
         }
 }
 
@@ -137,7 +133,7 @@ void mgsort2(char **A, char **A2, int head, int tail)
         }
 }
 
-//radixsort
+//radixsort + counting sort
 void rdsort(int *A, int *B)
 {
 	int *t;
@@ -153,16 +149,6 @@ void rdsort(int *A, int *B)
 	if(p != A) for(int i=0; i<MAXNUM; i++) A[i] = B[i];
 }
 
-void rdsort2(char **A, char **B)
-{
-	for(int i=MAXLEN-3; i>=0; i--)
-	{
-		ctsort2(A, B, i);
-		for(int i=0; i<MAXNUM; i++) strcpy(A[i], B[i]);
-	}
-}
-
-//countingsort
 void ctsort(int *A, int *B, int digit)
 {
 	int C[MAXDIGIT];
@@ -189,12 +175,27 @@ void ctsort(int *A, int *B, int digit)
 	}
 }
 
+void rdsort2(char **A, char **B)
+{
+	char **t;
+	char **p = A;
+	char **q = B;
+	
+	for(int i=MAXLEN-3; i>=0; i--)
+	{
+		ctsort2(p, q, i);
+		t = p;
+		p = q;
+		q = t;
+	}
+	if(p != A) for(int i=0; i<MAXNUM; i++) memcpy(A[i], B[i], sizeof(char)*MAXLEN);
+}
+
 void ctsort2(char **A, char **B, int alpha)
 {
-	char a;
 	int C[MAXALPHA];
-	int n[MAXNUM];
 	memset(C, 0, MAXALPHA*sizeof(int));
+	int n[MAXNUM];
 	
 	for(int i=0; i<MAXNUM; i++)
 	{
@@ -209,7 +210,7 @@ void ctsort2(char **A, char **B, int alpha)
 	}
 	for(int i=MAXNUM-1; i>=0; i--)
 	{
-		strcpy(B[C[n[i]]], A[i]);
+		memcpy(B[C[n[i]]], A[i], sizeof(char)*MAXLEN);
 		C[n[i]]--;
 	}
 }
@@ -220,4 +221,3 @@ void hpsort(int *A)
 	
 
 }
-

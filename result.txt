@@ -1,13 +1,13 @@
 -----------------------------------
-| quick sort | number | 0.1498sec |
+| quick sort | number | 0.1497sec |
 -----------------------------------
-| merge sort | number | 0.2028sec |
+| merge sort | number | 0.1750sec |
 -----------------------------------
-| radix sort | number | 0.1456sec |
+| radix sort | number | 0.1404sec |
 -----------------------------------
-| quick sort | alpha  | 0.5365sec |
+| quick sort | alpha  | 0.4101sec |
 -----------------------------------
-| merge sort | alpha  | 0.6517sec |
+| merge sort | alpha  | 0.5424sec |
 -----------------------------------
-| radix sort | alpha  | 5.8139sec |
+| radix sort | alpha  | 3.8996sec |
 -----------------------------------
