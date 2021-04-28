@@ -115,10 +115,7 @@ void merge2(char **A, char **A2, int head, int tail, int pivot)
                         j++;
                 }
         }
-	for(int k = head; k < tail+1; k++)
-        {
-		memcpy(A[k], A2[k], sizeof(char)*MAXLEN);
-        }
+	memcpy(A[head], A2[head], sizeof(char)*MAXLEN*(tail-head+1));
 }
 
 void mgsort2(char **A, char **A2, int head, int tail)

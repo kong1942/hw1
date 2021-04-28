@@ -9,8 +9,9 @@ int main(int argc, char **argv)
 	double diff;
 	FILE *fp;
 	FILE *fp2;
-	char testline[MAXLEN];
-	memset(testline, '\0', sizeof(char)*MAXLEN);
+	int *numArr;
+	numArr = (int *)malloc(sizeof(int) * MAXNUM);
+	memset(numArr, 0, MAXNUM*sizeof(int));
 	char **wdArr;
 	wdArr = (char **)malloc(sizeof(char *) * MAXNUM);
 	for(int i=0; i<MAXNUM; i++)
@@ -18,33 +19,11 @@ int main(int argc, char **argv)
 		wdArr[i] = (char *)malloc(sizeof(char) * MAXLEN);
 		memset(wdArr[i], '\0', sizeof(char)*MAXLEN);
 	}
-	
-	int *numArr;
-	numArr = (int *)malloc(sizeof(int) * MAXNUM);
-	int num=0, wd=0, i=1;
-	memset(numArr, 0, MAXNUM*sizeof(int));
 
-	if(!strcmp(argv[2], "n")) fp = fopen("dataset1.txt", "r");
-	else if(!strcmp(argv[2], "w")) fp = fopen("dataset2.txt", "r");
-
-	
-	if(fgets(testline, MAXLEN, fp))
+	if(!strcmp(argv[2], "n"))
 	{
-		if(isdigit(*testline)) 
-		{
-			numArr[0] = atoi(testline);
-			num++;
-		}
-		else if(isalpha(*testline))
-		{	
-			strcpy(wdArr[0], testline);
-			wd++;
-		}
-	}
-
-	if(num)
-	{
-		int *ptr = &numArr[1];
+		fp = fopen("dataset1.txt", "r");
+		int *ptr = &numArr[0];
 		
 		while(fscanf(fp, "%d", ptr) && ptr - numArr < MAXNUM) { ptr++; }
 		ptr = numArr;
@@ -88,8 +67,10 @@ int main(int argc, char **argv)
 //		while(ptr - numArr < MAXNUM) { printf("%d\n", *ptr); ptr++; }
 	}
 	
-	else if(wd)
+	else if(!strcmp(argv[2], "w"))
 	{
+		int i=0;
+		fp = fopen("dataset2.txt", "r");
 		fp2 = fopen("result.txt", "a");
 		while(fgets(wdArr[i], MAXLEN, fp)) { i++; }
 		if(!strcmp(argv[1], "qk"))
@@ -104,9 +85,10 @@ int main(int argc, char **argv)
 		{
 			char **wdArr2;
 			wdArr2 = (char **)malloc(sizeof(char *) * MAXNUM);
-			for(int i=0; i<MAXNUM; i++)
+			for(int j=0; j<MAXNUM; j++)
 			{
-				wdArr2[i] = (char *)malloc(sizeof(char) * MAXLEN);
+				wdArr2[j] = (char *)malloc(sizeof(char) * MAXLEN);
+				memset(wdArr2[j], '\0', sizeof(char)*MAXLEN);
 			}
 			
 			if(!strcmp(argv[1], "mg"))
@@ -125,9 +107,9 @@ int main(int argc, char **argv)
 				diff = 1000000 * (end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
 				fprintf(fp2, "| radix sort | alpha  | %.4fsec |\n", diff/1000000);
 			}
-			for(int i=0; i<MAXNUM; i++)
+			for(int j=0; j<MAXNUM; j++)
 			{
-				free(wdArr2[i]);
+				free(wdArr2[j]);
 			}
 			free(wdArr2);
 		}

@@ -2,7 +2,7 @@
 
 int main()
 {
-	int r, j=0;
+	int r;
 	char line[MAXLEN];
 	FILE *fp;
 	fp = fopen("dataset1.txt", "w");
@@ -17,6 +17,7 @@ int main()
 	fp = fopen("dataset2.txt", "w");
 	for(int i=0; i<MAXNUM; i++)
 	{
+		int j=0;
 		for(j=0; j<MAXLEN-2; j++)
 		{
 			r = rand()%2;

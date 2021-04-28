@@ -17,4 +17,4 @@ randdata.o: sort.h randgener.c
 	gcc -c randgener.c -o randdata.o
 
 clean:
-	rm -f sort.o randdata.o dataset1.txt dataset2.txt main
+	rm -f sort.o randdata.o dataset1.txt dataset2.txt result.txt rand main
