@@ -143,7 +143,7 @@ void rdsort(int *A, int *B)
 		p = q; 
 		q = t;
 	}
-	if(p != A) for(int i=0; i<MAXNUM; i++) A[i] = B[i];
+	if(p != A) memcpy(A, B, sizeof(int)*MAXNUM);
 }
 
 void ctsort(int *A, int *B, int digit)
@@ -184,7 +184,7 @@ void rdsort2(char **A, char **B)
 		p = q;
 		q = t;
 	}
-	if(p != A) for(int i=0; i<MAXNUM; i++) memcpy(A[i], B[i], sizeof(char)*MAXLEN);
+	if(p != A) memcpy(A[0], B[0], sizeof(char)*MAXLEN*MAXNUM);
 }
 
 void ctsort2(char **A, char **B, int alpha)
